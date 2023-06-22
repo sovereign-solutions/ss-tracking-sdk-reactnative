@@ -11,7 +11,8 @@ npm install ss-tracking-sdk-reactnative
 IOS:
 
 - In your info.plist add these keys and descriptions: NSLocationWhenInUseUsageDescription, NSLocationAlwaysAndWhenInUseUsageDescription, NSLocationAlwaysUsageDescription, NSMotionUsageDescription
-  Android:
+
+Android:
 - Open AndroidManifest.xml and add this under Application tag:
 
   <service android:name="com.sovereign.trackingsdk.TrackingService"
