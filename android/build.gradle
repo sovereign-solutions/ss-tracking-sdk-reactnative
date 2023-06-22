@@ -1,0 +1,67 @@
+buildscript {
+    if (project == rootProject) {
+        repositories {
+            google()
+            mavenCentral()
+            jcenter()
+        }
+
+        dependencies {
+            classpath 'com.android.tools.build:gradle:3.5.3'
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+    compileSdkVersion safeExtGet('SsTrackingSdkReactnative_compileSdkVersion', 31)
+    defaultConfig {
+        minSdkVersion safeExtGet('SsTrackingSdkReactnative_minSdkVersion', 16)
+        targetSdkVersion safeExtGet('SsTrackingSdkReactnative_targetSdkVersion', 31)
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url("$rootDir/../node_modules/react-native/android")
+    }
+    google()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    // import dependencies for tracking sdk
+    implementation files('libs/trackingsdk-release.aar')
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'androidx.room:room-runtime:2.4.3'
+    annotationProcessor "androidx.room:room-compiler:2.4.3"
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+}
