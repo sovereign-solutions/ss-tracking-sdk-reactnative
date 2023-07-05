@@ -13,12 +13,13 @@ IOS:
 - In your info.plist add these keys and descriptions: NSLocationWhenInUseUsageDescription, NSLocationAlwaysAndWhenInUseUsageDescription, NSLocationAlwaysUsageDescription, NSMotionUsageDescription
 
 Android:
+
 - Open AndroidManifest.xml and add this under Application tag:
   ```xml
   <service android:name="com.sovereign.trackingsdk.TrackingService"
        android:foregroundServiceType="location"/>
   <service android:name="com.sovereign.trackingsdk.ARIntentService"/>
-    ```
+  ```
 - add some permissions:
   ```xml
    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -30,7 +31,9 @@ Android:
    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
-```
+  ```
+
+````
 Authen:
 
     ApiUrl = HOST + "/api/app-base/vdms-tracking/push" // https://testing.skedulomatic.com/api/app-base/vdms-tracking/push
@@ -53,8 +56,10 @@ import {
   startTracking,
   stopTracking,
   setAuthenInfo,
+  setTrackerId,
+  setTrackingStatus,
 } from 'ss-tracking-sdk-reactnative';
-
+import DeviceInfo from 'react-native-device-info';
 // init
 
 initTracking(
@@ -62,13 +67,17 @@ initTracking(
       '/api/app-base/vdms-tracking/push',
       'bearer EPiAx6m-.....',
       'thanh13',
-      1,
+      2,
       'Tracking',
       'Tracking',
       true
     );
     setAuthenInfo('https://testing.skedulomatic.com','AEkdwq-....', '0');
 
+//setTrackerId
+    setTrackerId(DeviceInfo.getUniqueId() + '@' + user);
+//use this to change device status (1: active, 2: idle)
+    //setTrackingStatus(2);
 // start tracking
     const startTrackingHandler = () => {
         console.log('startTracking');
@@ -79,7 +88,7 @@ initTracking(
         console.log('reactnative stopTracking');
         stopTracking();
     };
-```
+````
 
 ## Contributing
 

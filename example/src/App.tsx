@@ -7,21 +7,28 @@ import {
   startTracking,
   stopTracking,
   setAuthenInfo,
+  setTrackerId,
+  setTrackingStatus,
 } from 'ss-tracking-sdk-reactnative';
-
+import DeviceInfo from 'react-native-device-info';
 export default function App() {
   React.useEffect(() => {
+    const user = 'thanh13';
     initTracking(
       'https://testing.skedulomatic.com',
       '/api/app-base/vdms-tracking/push',
       'bearer EPiAx6m-.....',
-      'thanh13',
-      1,
+      user,
+      2,
       'Tracking',
       'Tracking',
       true
     );
     setAuthenInfo('https://testing.skedulomatic.com','AEkdwq-....', '0');
+    //setTrackerId
+    setTrackerId(DeviceInfo.getUniqueId() + '@' + user);
+    //use this to change device status (1: active, 2: idle)
+    //setTrackingStatus(2);
   }, []);
 
   const startTrackingHandler = () => {
